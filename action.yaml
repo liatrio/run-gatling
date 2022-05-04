@@ -1,0 +1,18 @@
+name: run-gatling
+description: Runs a Gatling test suite
+inputs:
+  testDir:
+    description: "Path (or repo) to your test suite"
+    required: true
+    default: "."
+  simulation:
+    description: "Name of the simulation to run"
+    required: true
+runs:
+  using: "composite"
+  steps:
+    - uses: actions/setup-java@v3
+      with:
+        java-version: '17'
+    - run: $GITHUB_ACTION_PATH/run-gatling.sh ${{ inputs.testDir }} ${{ inputs.simulation }}
+      shell: bash
