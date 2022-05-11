@@ -46,4 +46,4 @@ jobs:
         with:
           repoName: liatrio/gatling-maven-showcase
           repoRef: ${{ env.BRANCH_NAME }}
-          simulationClass: ""
+          simulationClass: "simulations.GoogleStressSimulation"

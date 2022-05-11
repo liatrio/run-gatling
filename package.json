@@ -1,0 +1,53 @@
+{
+  "name": "gatling-action",
+  "version": "1.0.0",
+  "description": "run-gatling is a GitHub Action that easily enables Gatling integration to a CI/CT pipeline",
+  "scripts": {
+    "semantic-release": "semantic-release"
+  },
+  "engines": {
+    "node": ">=16"
+  },
+  "release": {
+    "branches": [
+      "main"
+    ],
+    "plugins": [
+      "@semantic-release/commit-analyzer",
+      "@semantic-release/release-notes-generator",
+      "@semantic-release/changelog",
+      [
+        "@semantic-release/npm",
+        {
+          "npmPublish": false
+        }
+      ],
+      [
+        "@semantic-release/git",
+        {
+          "assets": [
+            "package.json",
+            "CHANGELOG.md"
+          ],
+          "message": "chore(release): ${nextRelease.version} [skip ci]\n\n${nextRelease.notes}"
+        }
+      ],
+      "@semantic-release/github"
+    ]
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/liatrio/run-gatling.git"
+  },
+  "author": "Liatrio",
+  "license": "Apache-2.0",
+  "bugs": {
+    "url": "https://github.com/liatrio/run-gatling/issues"
+  },
+  "homepage": "https://github.com/liatrio/run-gatling#readme",
+  "devDependencies": {
+    "@semantic-release/changelog": "^6.0.1",
+    "@semantic-release/git": "^10.0.1",
+    "semantic-release": "^19.0.2"
+  }
+}

@@ -38,3 +38,4 @@ runs:
         java-version: ${{ inputs.javaVersion }}
     - run: mvn -f ${{ inputs.testPath }} gatling:test ${{ inputs.simulationClass != '' && '-Dgatling.simulationClass=' || '' }}${{ inputs.simulationClass }}
       shell: bash
+      
