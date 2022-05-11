@@ -11,14 +11,15 @@ inputs:
     required: true
   testPath:
     description: "Path (or repo: 'org/repo') to your test suite"
-    default: './test/'
+    default: "./test/"
     required: true
   repoName:
     description: "Name of the repository ('org/repo')" 
   repoRef:
     description: "Tag, branch or commit SHA for test suite repo"
-  simulation:
-    description: "Name of the simulation to run"
+    default: "main"
+  simulationClass:
+    description: "Full classpath of the simulation to run"
 runs:
   using: "composite"
   steps:
@@ -30,14 +31,10 @@ runs:
         ref: ${{ inputs.repoRef }}
         path: ${{ inputs.testPath }}
 
-    - name: debug
-      run: ls -la $GITHUB_WORKSPACE
-      shell: bash
-
     - name: Execute Gatling Test Suite
       uses: actions/setup-java@v3
       with:
         distribution: ${{ inputs.javaDistribution }}
         java-version: ${{ inputs.javaVersion }}
-    - run: mvn -f ${{ inputs.testPath }} gatling:test -D.simulation="${{ inputs.simulation }}"
+    - run: mvn -f ${{ inputs.testPath }} gatling:test -Dgatling.simulationClass="${{ inputs.simulationClass }}"
       shell: bash

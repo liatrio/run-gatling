@@ -5,19 +5,45 @@ name: Test Action
 on:
   pull_request:
 
+env:
+  BRANCH_NAME: initial-pr
+
 jobs:
-  test:
+  test-local-folder:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+
+      # Doing this here to simulate already having the test suite within the repo
+      - name: Checkout repo locally
+        uses: actions/checkout@v3
+        with:
+          repository: liatrio/gatling-maven-showcase
+          branch: $BRANCH_NAME
+          path: ./test
+
+      - name: Run Gatling Test Suite from local folder
+        uses: ./
+
+  test-with-repo:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
       
-      - name: Run Gatling Suite from distant repository
+      - name: Run Gatling Test Suite from repository
         uses: ./
         with:
           repoName: liatrio/gatling-maven-showcase
-          repoRef: initial-pr
+          repoRef: $BRANCH_NAME
 
-      - name: Run Gatling Suite from local folder
+  test-specific-simulation:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Run a specific simulation of the Gatling Test Suite
         uses: ./
         with:
-          testPath: ./gatling-maven-showcase
+          repoName: liatrio/gatling-maven-showcase
+          repoRef: $BRANCH_NAME
+          simulationClass: ""
