@@ -41,3 +41,27 @@ This action tends to solve that exact problem by enabling development teams to t
     #       parameter with the specific simulation to execute.
     simulationClass: ''
 ```
+# Scenarios
+
+## Execute local tests
+```yaml
+- uses: liatrio/run-gatling@v1
+  with:
+    testPath: my_test_suite/path
+```
+
+## Execute a specific simulation
+```yaml
+- uses: liatrio/run-gatling@v1
+  with:
+    testPath: my_test_suite/path
+    simulationClass: simulationsPkg.MySimulationClass
+```
+
+## Execute tests from a repository
+```yaml
+- uses: liatrio/run-gatling@v1
+  with:
+    repoName: liatrio/gatling-maven-showcase
+    repoRef: main
+```
