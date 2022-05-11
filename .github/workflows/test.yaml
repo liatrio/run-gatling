@@ -6,7 +6,7 @@ on:
   pull_request:
 
 env:
-  BRANCH_NAME: initial-pr
+  BRANCH_NAME: main
 
 jobs:
   test-local-folder:
