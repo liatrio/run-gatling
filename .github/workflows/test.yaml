@@ -6,25 +6,18 @@ on:
   pull_request:
 
 jobs:
-  plan:
+  test:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout sources
-        uses: actions/checkout@v3
-    
-      - name: Checkout test suite
-        uses: actions/checkout@v3
-        with:
-          name: liatrio/gatling-maven-showcase
-          ref: initial-pr
-
-      - name: Run Gatling Suite from local folder
-        uses: ./
-        with:
-          testDir: ./gatling-maven-showcase
+      - uses: actions/checkout@v3
       
       - name: Run Gatling Suite from distant repository
         uses: ./
         with:
-          testDir: https://github.com/liatrio/gatling-maven-showcase.git
+          repoName: liatrio/gatling-maven-showcase
           repoRef: initial-pr
+
+      - name: Run Gatling Suite from local folder
+        uses: ./
+        with:
+          testPath: ./gatling-maven-showcase
