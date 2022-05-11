@@ -1,5 +1,5 @@
 {
-  "name": "gatling-action",
+  "name": "run-gatling",
   "version": "1.0.0",
   "description": "run-gatling is a GitHub Action that easily enables Gatling integration to a CI/CT pipeline",
   "scripts": {
