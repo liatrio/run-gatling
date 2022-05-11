@@ -1,0 +1,40 @@
+name: run-gatling
+description: Runs a Gatling test suite
+inputs:
+  javaVersion:
+    description: "Java version to use"
+    default: "17"
+    required: true
+  javaDistribution:
+    description: "Java distribution to use"
+    default: "microsoft"
+    required: true
+  testPath:
+    description: "Path to the Gatling Test Suite"
+    default: "./test/"
+    required: true
+  repoName:
+    description: "Name of the repository to checkout ('org/repo')" 
+  repoRef:
+    description: "Tag, Branch, or Commit SHA for the Test Suite repository"
+    default: "main"
+  simulationClass:
+    description: "Full classpath of the simulation to run"
+runs:
+  using: "composite"
+  steps:
+    - name: Checkout Test Suite if not local
+      if: ${{ !hashFiles(inputs.testPath) }}
+      uses: actions/checkout@v3
+      with:
+        repository: ${{ inputs.repoName }}
+        ref: ${{ inputs.repoRef }}
+        path: ${{ inputs.testPath }}
+
+    - name: Execute Gatling Test Suite
+      uses: actions/setup-java@v3
+      with:
+        distribution: ${{ inputs.javaDistribution }}
+        java-version: ${{ inputs.javaVersion }}
+    - run: mvn -f ${{ inputs.testPath }} gatling:test ${{ inputs.simulationClass != '' && '-Dgatling.simulationClass=' || '' }}${{ inputs.simulationClass }}
+      shell: bash

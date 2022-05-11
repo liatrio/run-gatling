@@ -1,0 +1,49 @@
+
+   
+name: Test Action
+
+on:
+  pull_request:
+
+env:
+  BRANCH_NAME: main
+
+jobs:
+  test-local-folder:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+
+      # Doing this here to simulate already having the test suite within the repo
+      - name: Checkout repo locally
+        uses: actions/checkout@v3
+        with:
+          repository: liatrio/gatling-maven-showcase
+          ref: ${{ env.BRANCH_NAME }}
+          path: ./test
+
+      - name: Run Gatling Test Suite from local folder
+        uses: ./
+
+  test-with-repo:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      
+      - name: Run Gatling Test Suite from repository
+        uses: ./
+        with:
+          repoName: liatrio/gatling-maven-showcase
+          repoRef: ${{ env.BRANCH_NAME }}
+
+  test-specific-simulation:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Run a specific simulation of the Gatling Test Suite
+        uses: ./
+        with:
+          repoName: liatrio/gatling-maven-showcase
+          repoRef: ${{ env.BRANCH_NAME }}
+          simulationClass: "simulations.GoogleStressSimulation"
