@@ -1,7 +1,43 @@
 # run-gatling
-run-gatling is a GitHub action that sets up Gatling in your workflow and allows you to continuously test your app's performance as part of its' continuous testing (CT) pipeline.
+This action sets up Gatling in your workflow and allows continuous testing (CT) of an app's performances.
 
-# Philosophy
-Performance testing in the DevOps world is often thought as "needed" but is really just used as a gatekeeper to deploy to production. The truth is that performance testing is great at preventing bad user experience as well as lowering infrastructure cost (cloud and on-prem).
+# Context
+In the DevOps world, performance engineering is often thought as critical. Yet somehow, it is also greatly overlooked or done too late in the Software Development Lifecycle (SDLC).
 
-The goal of this action is to simplify execution by providing an easy way to integrate their Gatling test suite to their GitHub workflows.
+This action tends to solve that exact problem by enabling development teams to take ownership of their applications' performances. It leverages the "as Code" performance testing tool `Gatling` and the power `GitHub Actions` allowing developer to write their tests, version them, and execute them automatically in a CI/CT workflow.
+
+# Usage
+```yaml
+- uses: liatrio/run-gatling@v1
+  with:
+    # Java Version to use
+    # Default: '17'
+    javaVersion: ''
+
+    # Java Distribution to use
+    # Default: 'microsoft'
+    javaDistribution: ''
+
+    # Path to the Gatling Test Suite
+    # Default: './test'
+    testPath: ''
+
+    # Name of the repository to checkout ('org/repo')
+    # Default: ''
+    # (Optionnal)
+    repoName: ''
+
+    # Tag, Branch, or Commit SHA for the Test Suite repository
+    # Default: ''
+    # (Optionnal)
+    repoRef: ''
+
+    # Class of the simulation to run ('myPackage.MySimulationClass')
+    # Default: ''
+    # (Optionnal)
+    # Note: If the Test Suite contains more than one simulation,
+    #       you may want to configure the Maven plugin to run 
+    #       multiple simulations. Otherwise, you will have to fill this
+    #       parameter with the specific simulation to execute.
+    simulationClass: ''
+```

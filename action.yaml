@@ -10,13 +10,13 @@ inputs:
     default: "microsoft"
     required: true
   testPath:
-    description: "Path (or repo: 'org/repo') to your test suite"
+    description: "Path to the Gatling Test Suite"
     default: "./test/"
     required: true
   repoName:
-    description: "Name of the repository ('org/repo')" 
+    description: "Name of the repository to checkout ('org/repo')" 
   repoRef:
-    description: "Tag, branch or commit SHA for test suite repo"
+    description: "Tag, Branch, or Commit SHA for the Test Suite repository"
     default: "main"
   simulationClass:
     description: "Full classpath of the simulation to run"
@@ -38,4 +38,3 @@ runs:
         java-version: ${{ inputs.javaVersion }}
     - run: mvn -f ${{ inputs.testPath }} gatling:test ${{ inputs.simulationClass != '' && '-Dgatling.simulationClass=' || '' }}${{ inputs.simulationClass }}
       shell: bash
-      
