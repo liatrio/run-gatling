@@ -19,7 +19,7 @@ jobs:
         uses: actions/checkout@v3
         with:
           repository: liatrio/gatling-maven-showcase
-          branch: $BRANCH_NAME
+          ref: ${{ env.BRANCH_NAME }}
           path: ./test
 
       - name: Run Gatling Test Suite from local folder
@@ -34,7 +34,7 @@ jobs:
         uses: ./
         with:
           repoName: liatrio/gatling-maven-showcase
-          repoRef: $BRANCH_NAME
+          repoRef: ${{ env.BRANCH_NAME }}
 
   test-specific-simulation:
     runs-on: ubuntu-latest
@@ -45,5 +45,5 @@ jobs:
         uses: ./
         with:
           repoName: liatrio/gatling-maven-showcase
-          repoRef: $BRANCH_NAME
+          repoRef: ${{ env.BRANCH_NAME }}
           simulationClass: ""

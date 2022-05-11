@@ -36,5 +36,5 @@ runs:
       with:
         distribution: ${{ inputs.javaDistribution }}
         java-version: ${{ inputs.javaVersion }}
-    - run: mvn -f ${{ inputs.testPath }} gatling:test -Dgatling.simulationClass="${{ inputs.simulationClass }}"
+    - run: mvn -f ${{ inputs.testPath }} gatling:test ${{ inputs.simulationClass != '' && '-Dgatling.simulationClass=' || '' }}${{ inputs.simulationClass }}
       shell: bash
