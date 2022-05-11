@@ -1,18 +1,25 @@
 name: run-gatling
 description: Runs a Gatling test suite
 inputs:
-  testDir:
-    description: "Path (or repo) to your test suite"
+  testPath:
+    description: "Path (or repo: 'org/repo') to your test suite"
     required: true
     default: "."
+  repoRef:
+    description: "Tag, branch or commit SHA for test suite repo"
   simulation:
     description: "Name of the simulation to run"
-    required: true
 runs:
   using: "composite"
   steps:
+    - uses: actions/checkout@v3
+      if: ${{ hashFiles(inputs.path) !== "" }}
+      with:
+        name: ${{ inputs.testPath }}
+        ref: ${{ inputs.repoPath }}
+
     - uses: actions/setup-java@v3
       with:
         java-version: '17'
-    - run: $GITHUB_ACTION_PATH/run-gatling.sh ${{ inputs.testDir }} ${{ inputs.simulation }}
+    - run: mvn -f ${{ inputs.testPath }} gatling:test -D.simulation="${{ inputs.simulation }}"
       shell: bash
