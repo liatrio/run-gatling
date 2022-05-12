@@ -53,4 +53,6 @@ runs:
     - name: Generate Job Summary 
       uses: actions/github-script@v6
         with:
-          script: require('./generateReport.js')
+          script: |
+            const script = require('./generateReport.js')
+            console.log(script({github, context}))
