@@ -52,7 +52,7 @@ runs:
 
     - name: Generate Job Summary 
       uses: actions/github-script@v6
-        with:
-          script: |
-            const script = require('./generateReport.js')
-            console.log(script({github, context}))
+      with:
+        script: |
+          const script = require('./generateReport.js')
+          console.log(script({github, context}))
