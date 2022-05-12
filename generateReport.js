@@ -1,10 +1,21 @@
-import * as core from '@actions/core' 
+const core = require('@actions/core');
+const fs   = require('fs');
 
-const generateTestResults = () => {
-
+const generateTestResults = (runName) => {
+    console.log(runName);
 }
 
-console.log('foo')
+const main = () => {
+    const testPath = core.getInput('testPath');
+    const lastRuns = fs.readFileSync(`./${testPath}target/gatling/lastRun.txt`).toString().split('\n');
+
+    for(const run of lastRuns) {
+        generateTestResults(run)
+    }
+}
+
+
+main();
 
 // await core.summary
 //     .addHeading('Gatling Test Results')

@@ -39,19 +39,6 @@ runs:
     - run: mvn -f ${{ inputs.testPath }} gatling:test ${{ inputs.simulationClass != '' && '-Dgatling.simulationClass=' || '' }}${{ inputs.simulationClass }}
       shell: bash
 
-    # Download Gatling-Report to generate a parsable CSV file from the results
-    - name: Download gatling-report
-      env:
-        GATLING_REPORT_VERSION: '6.0'
-      run: wget -O ./gatling-report.jar https://maven-eu.nuxeo.org/nexus/service/local/repositories/vendor-releases/content/org/nuxeo/tools/gatling-report/${{ env.GATLING_REPORT_VERSION }}/gatling-report-${{ env.GATLING_REPORT_VERSION }}-capsule-fat.jar
-      shell: bash
-
-    - name: Generate CSV Report
-      env:
-        GATLING_REPORT_FOLDER: ${{ inputs.testPath }}target/gatling
-      run: java -jar ./gatling-report.jar ${{ env.GATLING_REPORT_FOLDER }}/$(cat ${{ env.GATLING_REPORT_FOLDER }}/lastRun.txt)/simulation.log
-      shell: bash
-
     - name: Generate Job Summary 
       uses: actions/github-script@v6
       with:
