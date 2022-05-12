@@ -2,7 +2,10 @@ const core = require('@actions/core');
 const fs   = require('fs');
 
 const generateTestResults = (runName) => {
-    console.log(runName);
+    const results = JSON.parse(fs.readFileSync(`./test/target/gatling/${runName}/js/stats.json`).toString()).contents;
+    for(const result of results) {
+        console.log(JSON.stringify(result));
+    }
 }
 
 const main = () => {
@@ -14,7 +17,6 @@ const main = () => {
         generateTestResults(run)
     }
 }
-
 
 main();
 

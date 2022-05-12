@@ -38,10 +38,15 @@ runs:
         java-version: ${{ inputs.javaVersion }}
     - run: mvn -f ${{ inputs.testPath }} gatling:test ${{ inputs.simulationClass != '' && '-Dgatling.simulationClass=' || '' }}${{ inputs.simulationClass }}
       shell: bash
+
+    - uses: actions/setup-node@v3
+        with:
+          node-version: '16'
+      - run: yarn install
+      - run: yarn run build
   
     - name: Generate Job Summary 
       uses: actions/github-script@v6
       with:
         script: |
-          const script = require('./dist/index.js')
-          console.log(script({github, context}))
+          require('./dist/index.js')

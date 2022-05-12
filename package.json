@@ -3,7 +3,8 @@
   "version": "1.0.0",
   "description": "run-gatling is a GitHub Action that easily enables Gatling integration to a CI/CT pipeline",
   "scripts": {
-    "semantic-release": "semantic-release"
+    "semantic-release": "semantic-release",
+    "build": "ncc build index.js --out dist --license licenses.txt"
   },
   "engines": {
     "node": ">=16"
@@ -48,7 +49,8 @@
   "devDependencies": {
     "@semantic-release/changelog": "^6.0.1",
     "@semantic-release/git": "^10.0.1",
-    "semantic-release": "^19.0.2"
+    "semantic-release": "^19.0.2",
+    "@vercel/ncc": "^0.33.1"
   },
   "dependencies": {
     "@actions/core": "^1.8.0"
