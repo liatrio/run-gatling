@@ -38,10 +38,10 @@ runs:
         java-version: ${{ inputs.javaVersion }}
     - run: mvn -f ${{ inputs.testPath }} gatling:test ${{ inputs.simulationClass != '' && '-Dgatling.simulationClass=' || '' }}${{ inputs.simulationClass }}
       shell: bash
-
+  
     - name: Generate Job Summary 
       uses: actions/github-script@v6
       with:
         script: |
-          const script = require('./generateReport.js')
+          const script = require('./dist/index.js')
           console.log(script({github, context}))

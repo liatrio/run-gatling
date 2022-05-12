@@ -6,8 +6,9 @@ const generateTestResults = (runName) => {
 }
 
 const main = () => {
-    const testPath = core.getInput('testPath');
-    const lastRuns = fs.readFileSync(`./${testPath}target/gatling/lastRun.txt`).toString().split('\n');
+    // TODO: figure out why input is not registered 
+    // const testPath = core.getInput('testPath');
+    const lastRuns = fs.readFileSync(`./test/target/gatling/lastRun.txt`).toString().split('\n');
 
     for(const run of lastRuns) {
         generateTestResults(run)
