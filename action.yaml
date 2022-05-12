@@ -49,7 +49,7 @@ runs:
     - name: Generate CSV Report
       env:
         GATLING_REPORT_FOLDER: ${{ inputs.testPath }}target/gatling
-      run: java -jar ./gatling-report.jar ${{ env.GATLING_REPORT_FOLDER }}/$(cat ${{ env.GATLING_REPORT_FOLDER }}/lastRun.txt)/simulation.log)
+      run: java -jar ./gatling-report.jar ${{ env.GATLING_REPORT_FOLDER }}/$(cat ${{ env.GATLING_REPORT_FOLDER }}/lastRun.txt)/simulation.log
       shell: bash
 
     - name: Generate Job Summary 
