@@ -15,6 +15,7 @@ const main = () => {
     const lastRuns = fs.readFileSync(`./test/target/gatling/lastRun.txt`).toString().split('\n');
 
     for(const run of lastRuns) {
+        if(run.trim() !== "")
         generateTestResults(run)
     }
 }

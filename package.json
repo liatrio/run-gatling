@@ -4,7 +4,8 @@
   "description": "run-gatling is a GitHub Action that easily enables Gatling integration to a CI/CT pipeline",
   "scripts": {
     "semantic-release": "semantic-release",
-    "build": "ncc build index.js --out dist --license licenses.txt"
+    "build": "ncc build index.js --out dist --license licenses.txt",
+    "local_test": "act pull_request -j test-local-folder -s GITHUB_TOKEN"
   },
   "engines": {
     "node": ">=16"
