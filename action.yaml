@@ -42,8 +42,8 @@ runs:
     # Download Gatling-Report to generate a parsable CSV file from the results
     - name: Download gatling-report
       env:
-        GATLING_REPORT_VERSION: '5.0'
-      run: wget -O ./gatling-report.jar https://maven-eu.nuxeo.org/nexus/service/local/repositories/public-releases/content/org/nuxeo/tools/gatling-report/5.0/gatling-report-${{ env.GATLING_REPORT_VERSION }}.jar
+        GATLING_REPORT_VERSION: '6.0'
+      run: wget -O ./gatling-report.jar https://maven-eu.nuxeo.org/nexus/service/local/repositories/vendor-releases/content/org/nuxeo/tools/gatling-report/${{ env.GATLING_REPORT_VERSION }}/gatling-report-${{ env.GATLING_REPORT_VERSION }}-capsule-fat.jar
       shell: bash
 
     - name: Generate CSV Report
