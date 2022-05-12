@@ -40,10 +40,10 @@ runs:
       shell: bash
 
     - uses: actions/setup-node@v3
-        with:
-          node-version: '16'
-      - run: yarn install
-      - run: yarn run build
+      with:
+        node-version: '16'
+    - run: yarn install && yarn run build
+      shell: bash
   
     - name: Generate Job Summary 
       uses: actions/github-script@v6

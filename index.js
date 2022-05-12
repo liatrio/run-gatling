@@ -2,10 +2,11 @@ const core = require('@actions/core');
 const fs   = require('fs');
 
 const generateTestResults = (runName) => {
-    const results = JSON.parse(fs.readFileSync(`./test/target/gatling/${runName}/js/stats.json`).toString()).contents;
-    for(const result of results) {
-        console.log(JSON.stringify(result));
-    }
+    const results = JSON.parse(fs.readFileSync(`./test/target/gatling/${runName}/js/stats.json`).toString());
+    console.log(JSON.stringify(results, undefined, 2));
+    // for(const result of results) {
+    //     console.log(JSON.stringify(result));
+    // }
 }
 
 const main = () => {
