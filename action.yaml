@@ -43,7 +43,7 @@ runs:
     - name: Download gatling-report
       env:
         GATLING_REPORT_VERSION: '5.0'
-      run: wget https://maven-eu.nuxeo.org/nexus/service/local/artifact/maven/redirect?r=public-releases&g=org.nuxeo.tools&a=gatling-report&v=$GATLING_REPORT_VERSION&e=jar -O ./gatling-report.jar
+      run: wget -O ./gatling-report.jar https://maven-eu.nuxeo.org/nexus/service/local/artifact/maven/redirect?r=public-releases&g=org.nuxeo.tools&a=gatling-report&v=${{ env.GATLING_REPORT_VERSION }}&e=jar
       shell: bash
 
     - name: Generate CSV Report
