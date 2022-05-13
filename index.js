@@ -1,10 +1,10 @@
 const core = require('@actions/core');
 const fs   = require('fs');
 
-const filePath = `./test/target`
+const testPath = core.getInput('testPath');
 
 const generateTestResults = async (runName) => {
-    const results = JSON.parse(fs.readFileSync(`${filePath}/gatling/${runName}/js/stats.json`).toString());
+    const results = JSON.parse(fs.readFileSync(`${testPath}/gatling/${runName}/js/stats.json`).toString());
     let tableContent = [
         [
             {data: 'Request', header: true}, 
@@ -40,15 +40,12 @@ const generateTestResults = async (runName) => {
 }
 
 const main = () => {
-    // TODO: figure out why input is not registered 
-    // const testPath = core.getInput('testPath');
-    const lastRuns = fs.readFileSync(`${filePath}/gatling/lastRun.txt`).toString().trim().split('\n');
+    const lastRuns = fs.readFileSync(`${testPath}/gatling/lastRun.txt`).toString().trim().split('\n');
 
     for(const run of lastRuns) {
         generateTestResults(run)
     }
 }
 
+
 main();
-
-
