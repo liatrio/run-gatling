@@ -8,8 +8,8 @@ const generateTestResults = async (runName) => {
     let tableContent = [
         [
             {data: 'Request', header: true}, 
-            {data: 'Success', header: true}, 
-            {data: 'Errors', header: true}, 
+            {data: 'Success ✅', header: true}, 
+            {data: 'Errors ❌', header: true}, 
             {data: 'Min', header: true},
             {data: 'Max', header: true},
             {data: 'Avg.', header: true},
