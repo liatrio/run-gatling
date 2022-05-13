@@ -8,7 +8,7 @@ This action tends to solve that exact problem by enabling development teams to t
 
 # Usage
 ```yaml
-- uses: liatrio/run-gatling@v1
+- uses: liatrio/run-gatling@v1.1.0
   with:
     # Java Version to use
     # Default: '17'
