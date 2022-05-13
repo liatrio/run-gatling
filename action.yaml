@@ -11,7 +11,7 @@ inputs:
     required: true
   testPath:
     description: "Path to the Gatling Test Suite"
-    default: "./test/"
+    default: "./test"
     required: true
   repoName:
     description: "Name of the repository to checkout ('org/repo')" 
@@ -49,4 +49,5 @@ runs:
       uses: actions/github-script@v6
       with:
         script: |
-          require('./dist/index.js')
+          const script = require('./dist/index.js')
+          await script({github, context, core})

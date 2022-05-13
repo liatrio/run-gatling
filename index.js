@@ -1,10 +1,7 @@
-const core = require('@actions/core');
 const fs   = require('fs');
 
-const testPath = core.getInput('testPath');
-
-const generateTestResults = async (runName) => {
-    const results = JSON.parse(fs.readFileSync(`${testPath}/gatling/${runName}/js/stats.json`).toString());
+const generateTestResults = async (runName, core, testPath) => {
+    const results = JSON.parse(fs.readFileSync(`${testPath}/target/gatling/${runName}/js/stats.json`).toString());
     let tableContent = [
         [
             {data: 'Request', header: true}, 
@@ -40,12 +37,15 @@ const generateTestResults = async (runName) => {
 }
 
 const main = () => {
-    const lastRuns = fs.readFileSync(`${testPath}/gatling/lastRun.txt`).toString().trim().split('\n');
-
-    for(const run of lastRuns) {
-        generateTestResults(run)
-    }
+    
 }
 
+module.exports = async ({github, context, core}) => {
+    const testPath = core.getInput('testPath')
+    console.log("testPath: " + core.getInput("testPath"))
+    const lastRuns = fs.readFileSync(`${testPath}/target/gatling/lastRun.txt`).toString().trim().split('\n');
 
-main();
+    for(const run of lastRuns) {
+        generateTestResults(run, core, testPath)
+    }
+}
