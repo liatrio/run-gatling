@@ -5,20 +5,37 @@ const filePath = `./test/target`
 
 const generateTestResults = async (runName) => {
     const results = JSON.parse(fs.readFileSync(`${filePath}/gatling/${runName}/js/stats.json`).toString());
+    let tableContent = [
+        [
+            {data: 'Request', header: true}, 
+            {data: 'Success', header: true}, 
+            {data: 'Errors', header: true}, 
+            {data: 'Min', header: true},
+            {data: 'Max', header: true},
+            {data: 'Avg.', header: true},
+            {data: 'Std. Dev.', header: true},
+            {data: 'RPS', header: true},
+        ]
+    ];
     
     for(const result in results.contents) {
-        const requestMetrics = results.contents[result];
+        const requestMetrics = results.contents[result].stats;
+        tableContent.push([
+            requestMetrics.name,
+            requestMetrics.numberOfRequests.ok.toString(),
+            requestMetrics.numberOfRequests.ko.toString(),
+            requestMetrics.minResponseTime.total.toString(),
+            requestMetrics.maxResponseTime.total.toString(),
+            requestMetrics.meanResponseTime.total.toString(),
+            requestMetrics.standardDeviation.total.toString(),
+            requestMetrics.meanNumberOfRequestsPerSecond.total.toString(),
+        ]);
     }
 
     await core.summary
         .addHeading(`Results for ${runName}`)
-        .addTable([
-            [{data: 'Request', header: true}, {data: 'p90', header: true}],
-            ['foo.js', 'Pass ✅'],
-            ['bar.js', 'Fail ❌'],
-            ['test.js', 'Pass ✅']
-        ])
-        .addLink('View staging deployment!', 'https://github.com')
+        .addTable(tableContent)
+        .addQuote('All times are in millisecond (ms). RPS means "Requests per Second"')
         .write()
 }
 
