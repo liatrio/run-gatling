@@ -3,19 +3,18 @@ const fs   = require('fs');
 
 const generateTestResults = (runName) => {
     const results = JSON.parse(fs.readFileSync(`./test/target/gatling/${runName}/js/stats.json`).toString());
-    console.log(JSON.stringify(results, undefined, 2));
-    // for(const result of results) {
-    //     console.log(JSON.stringify(result));
-    // }
+    
+    for(const result of results.contents) {
+        console.log(JSON.stringify(result));
+    }
 }
 
 const main = () => {
     // TODO: figure out why input is not registered 
     // const testPath = core.getInput('testPath');
-    const lastRuns = fs.readFileSync(`./test/target/gatling/lastRun.txt`).toString().split('\n');
+    const lastRuns = fs.readFileSync(`./test/target/gatling/lastRun.txt`).toString().trim().split('\n');
 
     for(const run of lastRuns) {
-        if(run.trim() !== "")
         generateTestResults(run)
     }
 }
