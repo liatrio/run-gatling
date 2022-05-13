@@ -11,7 +11,7 @@ inputs:
     required: true
   testPath:
     description: "Path to the Gatling Test Suite"
-    default: "./test/"
+    default: "./test"
     required: true
   repoName:
     description: "Name of the repository to checkout ('org/repo')" 
@@ -38,3 +38,18 @@ runs:
         java-version: ${{ inputs.javaVersion }}
     - run: mvn -f ${{ inputs.testPath }} gatling:test ${{ inputs.simulationClass != '' && '-Dgatling.simulationClass=' || '' }}${{ inputs.simulationClass }}
       shell: bash
+
+    - uses: actions/setup-node@v3
+      with:
+        node-version: '16'
+    - run: yarn install && yarn run build
+      shell: bash
+  
+    - name: Generate Job Summary 
+      uses: actions/github-script@v6
+      env:
+        TEST_PATH: ${{ inputs.testPath }}
+      with:
+        script: |
+          const script = require('./dist/index.js')
+          await script({github, context, core})
