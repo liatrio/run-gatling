@@ -47,6 +47,8 @@ runs:
   
     - name: Generate Job Summary 
       uses: actions/github-script@v6
+      env:
+        TEST_PATH: ${{ inputs.testPath }}
       with:
         script: |
           const script = require('./dist/index.js')
