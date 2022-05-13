@@ -1,10 +1,9 @@
 const core = require('@actions/core');
 const fs   = require('fs');
 
-// const filePath = `./test/target`
-const filePath = '/Users/agauthier/Documents/Personal-GH/liatrio-gatling-test-showcase/target'
+const filePath = `./test/target`
 
-const generateTestResults = (runName) => {
+const generateTestResults = async (runName) => {
     const results = JSON.parse(fs.readFileSync(`${filePath}/gatling/${runName}/js/stats.json`).toString());
     
     for(const result in results.contents) {
@@ -31,11 +30,6 @@ const main = () => {
     for(const run of lastRuns) {
         generateTestResults(run)
     }
-}
-
-const generateSummaryTable = (name) => {
-    return await core.summary
-    .addHeading(name)
 }
 
 main();
