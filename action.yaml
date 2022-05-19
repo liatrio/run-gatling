@@ -15,11 +15,14 @@ inputs:
     required: true
   repoName:
     description: "Name of the repository to checkout ('org/repo')" 
+    required: false
   repoRef:
     description: "Tag, Branch, or Commit SHA for the Test Suite repository"
     default: "main"
+    required: false
   simulationClass:
     description: "Full classpath of the simulation to run"
+    required: false
 runs:
   using: "composite"
   steps:
@@ -36,13 +39,8 @@ runs:
       with:
         distribution: ${{ inputs.javaDistribution }}
         java-version: ${{ inputs.javaVersion }}
-    - run: mvn -f ${{ inputs.testPath }} gatling:test ${{ inputs.simulationClass != '' && '-Dgatling.simulationClass=' || '' }}${{ inputs.simulationClass }}
-      shell: bash
 
-    - uses: actions/setup-node@v3
-      with:
-        node-version: '16'
-    - run: yarn install && yarn run build
+    - run: mvn -f ${{ inputs.testPath }} gatling:test ${{ inputs.simulationClass != '' && '-Dgatling.simulationClass=' || '' }}${{ inputs.simulationClass }}
       shell: bash
   
     - name: Generate Job Summary 
