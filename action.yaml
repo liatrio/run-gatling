@@ -11,7 +11,7 @@ inputs:
     required: true
   testPath:
     description: "Path to the Gatling Test Suite"
-    default: "./test"
+    default: "test"
     required: true
   repoName:
     description: "Name of the repository to checkout ('org/repo')" 
@@ -28,6 +28,8 @@ runs:
   steps:
     - name: Checkout action code
       uses: actions/checkout@v3
+      with:
+        path: gatling-action
       
     - name: Checkout Test Suite if not local
       if: ${{ !hashFiles(inputs.testPath) }}
@@ -42,13 +44,10 @@ runs:
       with:
         distribution: ${{ inputs.javaDistribution }}
         java-version: ${{ inputs.javaVersion }}
-    
-    - name: debug
-      run: |
-        ls -la $(pwd)
-      shell: bash
-
-    - run: mvn -f ${{ inputs.testPath }} gatling:test ${{ inputs.simulationClass != '' && '-Dgatling.simulationClass=' || '' }}${{ inputs.simulationClass }}
+    - run: |
+        ls -la $GITHUB_WORKSPACE
+        ls -la $GITHUB_WORKSPACE/${{ inputs.testPath }}
+        mvn -f $GITHUB_WORKSPACE/${{ inputs.testPath }} gatling:test ${{ inputs.simulationClass != '' && '-Dgatling.simulationClass=' || '' }}${{ inputs.simulationClass }}
       shell: bash
   
     - name: Generate Job Summary 
@@ -57,5 +56,5 @@ runs:
         TEST_PATH: ${{ inputs.testPath }}
       with:
         script: |
-          const script = require(`${process.env.GITHUB_WORKSPACE}/dist/index.js`)
+          const script = require(`${process.env.GITHUB_WORKSPACE}/gatling-action/dist/index.js`)
           await script({github, context, core})

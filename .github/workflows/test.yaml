@@ -12,15 +12,16 @@ jobs:
   test-local-folder:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
-
       # Doing this here to simulate already having the test suite within the repo
-      - name: Checkout repo locally
+      - name: Checkout test suite
         uses: actions/checkout@v3
         with:
           repository: liatrio/gatling-maven-showcase
           ref: ${{ env.BRANCH_NAME }}
-          path: ./test
+          path: test
+
+      - name: debug
+        run: ls -la test/
 
       - name: Run Gatling Test Suite from local folder
         uses: ./
@@ -29,7 +30,6 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
-      
       - name: Run Gatling Test Suite from repository
         uses: ./
         with:
@@ -40,7 +40,6 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
-
       - name: Run a specific simulation of the Gatling Test Suite
         uses: ./
         with:
@@ -48,10 +47,10 @@ jobs:
           repoRef: ${{ env.BRANCH_NAME }}
           simulationClass: "simulations.GoogleStressSimulation"
 
-  testing-remote-action:
+  test-using-remote-action:
     runs-on: ubuntu-latest
     steps:
-      - uses: liatrio/run-gatling@testing-remote-action
+      - uses: liatrio/run-gatling@main
         with:
           repoName: liatrio/gatling-maven-showcase
           repoRef: ${{ env.BRANCH_NAME }}
