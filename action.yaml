@@ -28,8 +28,6 @@ runs:
   steps:
     - name: Checkout action code
       uses: actions/checkout@v3
-      with:
-        path: gatling-action
       
     - name: Checkout Test Suite if not local
       if: ${{ !hashFiles(inputs.testPath) }}
@@ -44,9 +42,10 @@ runs:
       with:
         distribution: ${{ inputs.javaDistribution }}
         java-version: ${{ inputs.javaVersion }}
+
     - run: |
-        ls -la $GITHUB_WORKSPACE
-        ls -la $GITHUB_WORKSPACE/${{ inputs.testPath }}
+        ls -l $GITHUB_WORKSPACE/
+        ls -l $GITHUB_WORKSPACE/test
         mvn -f $GITHUB_WORKSPACE/${{ inputs.testPath }} gatling:test ${{ inputs.simulationClass != '' && '-Dgatling.simulationClass=' || '' }}${{ inputs.simulationClass }}
       shell: bash
   
@@ -56,5 +55,5 @@ runs:
         TEST_PATH: ${{ inputs.testPath }}
       with:
         script: |
-          const script = require(`${process.env.GITHUB_WORKSPACE}/gatling-action/dist/index.js`)
+          const script = require(`${process.env.GITHUB_WORKSPACE}/dist/index.js`)
           await script({github, context, core})
