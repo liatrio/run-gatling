@@ -43,10 +43,7 @@ runs:
         distribution: ${{ inputs.javaDistribution }}
         java-version: ${{ inputs.javaVersion }}
 
-    - run: |
-        ls -l $GITHUB_WORKSPACE/
-        ls -l $GITHUB_WORKSPACE/test
-        mvn -f $GITHUB_WORKSPACE/${{ inputs.testPath }} gatling:test ${{ inputs.simulationClass != '' && '-Dgatling.simulationClass=' || '' }}${{ inputs.simulationClass }}
+    - run: mvn -f $GITHUB_WORKSPACE/${{ inputs.testPath }} gatling:test ${{ inputs.simulationClass != '' && '-Dgatling.simulationClass=' || '' }}${{ inputs.simulationClass }}
       shell: bash
   
     - name: Generate Job Summary 
