@@ -7,7 +7,6 @@ on:
 
 env:
   BRANCH_NAME: main
-  ACTION_VERSION: 1.1.1
 
 jobs:
   test-local-folder:
@@ -52,7 +51,7 @@ jobs:
   testing-remote-action:
     runs-on: ubuntu-latest
     steps:
-      - uses: liatrio/run-gatling@${{ env.ACTION_VERSION }}
+      - uses: liatrio/run-gatling@v1.1.1
         with:
           repoName: liatrio/gatling-maven-showcase
           repoRef: ${{ env.BRANCH_NAME }}
