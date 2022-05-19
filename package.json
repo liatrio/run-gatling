@@ -1,6 +1,6 @@
 {
   "name": "run-gatling",
-  "version": "1.1.1",
+  "version": "1.1.2",
   "description": "run-gatling is a GitHub Action that easily enables Gatling integration to a CI/CT pipeline",
   "scripts": {
     "semantic-release": "semantic-release",
