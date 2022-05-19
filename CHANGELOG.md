@@ -1,3 +1,10 @@
+### [1.1.3](https://github.com/liatrio/run-gatling/compare/v1.1.2...v1.1.3) (2022-05-19)
+
+
+### Bug Fixes
+
+* removed debug traces ([#8](https://github.com/liatrio/run-gatling/issues/8)) ([18ea687](https://github.com/liatrio/run-gatling/commit/18ea687efba2f74064cc76c79aea3af24fff65ae))
+
 ### [1.1.2](https://github.com/liatrio/run-gatling/compare/v1.1.1...v1.1.2) (2022-05-19)
 
 
