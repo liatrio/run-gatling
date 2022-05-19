@@ -49,5 +49,5 @@ runs:
         TEST_PATH: ${{ inputs.testPath }}
       with:
         script: |
-          const script = require('./dist/index.js')
+          const script = require(`${process.env.GITHUB_WORKSPACE}/dist/index.js`)
           await script({github, context, core})
