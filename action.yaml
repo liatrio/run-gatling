@@ -48,14 +48,14 @@ runs:
         ls -la $(pwd)
       shell: bash
 
-    # - run: mvn -f ${{ inputs.testPath }} gatling:test ${{ inputs.simulationClass != '' && '-Dgatling.simulationClass=' || '' }}${{ inputs.simulationClass }}
-    #   shell: bash
+    - run: mvn -f ${{ inputs.testPath }} gatling:test ${{ inputs.simulationClass != '' && '-Dgatling.simulationClass=' || '' }}${{ inputs.simulationClass }}
+      shell: bash
   
-    # - name: Generate Job Summary 
-    #   uses: actions/github-script@v6
-    #   env:
-    #     TEST_PATH: ${{ inputs.testPath }}
-    #   with:
-    #     script: |
-    #       const script = require(`${process.env.GITHUB_WORKSPACE}/dist/index.js`)
-    #       await script({github, context, core})
+    - name: Generate Job Summary 
+      uses: actions/github-script@v6
+      env:
+        TEST_PATH: ${{ inputs.testPath }}
+      with:
+        script: |
+          const script = require(`${process.env.GITHUB_WORKSPACE}/dist/index.js`)
+          await script({github, context, core})
