@@ -42,6 +42,11 @@ runs:
 
     - run: mvn -f ${{ inputs.testPath }} gatling:test ${{ inputs.simulationClass != '' && '-Dgatling.simulationClass=' || '' }}${{ inputs.simulationClass }}
       shell: bash
+
+    - name: debug
+      run: |
+        ls -la
+      shell: bash
   
     - name: Generate Job Summary 
       uses: actions/github-script@v6

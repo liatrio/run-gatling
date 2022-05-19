@@ -7,6 +7,7 @@ on:
 
 env:
   BRANCH_NAME: main
+  ACTION_VERSION: 1.1.1
 
 jobs:
   test-local-folder:
@@ -43,6 +44,15 @@ jobs:
 
       - name: Run a specific simulation of the Gatling Test Suite
         uses: ./
+        with:
+          repoName: liatrio/gatling-maven-showcase
+          repoRef: ${{ env.BRANCH_NAME }}
+          simulationClass: "simulations.GoogleStressSimulation"
+
+  testing-remote-action:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: liatrio/run-gatling@${{ env.ACTION_VERSION }}
         with:
           repoName: liatrio/gatling-maven-showcase
           repoRef: ${{ env.BRANCH_NAME }}
