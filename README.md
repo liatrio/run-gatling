@@ -8,7 +8,7 @@ This action tries to solve that exact problem by enabling development teams to t
 
 # Usage
 ```yaml
-- uses: liatrio/run-gatling@v1.1.0
+- uses: liatrio/run-gatling@v1.1.4
   with:
     # Java Version to use
     # Default: '17'
@@ -22,16 +22,6 @@ This action tries to solve that exact problem by enabling development teams to t
     # Default: './test'
     pomPath: ''
 
-    # Name of the repository to checkout ('org/repo')
-    # Default: ''
-    # (Optionnal)
-    repoName: ''
-
-    # Tag, Branch, or Commit SHA for the Test Suite repository
-    # Default: ''
-    # (Optionnal)
-    repoRef: ''
-
     # Class of the simulation to run ('myPackage.MySimulationClass')
     # Default: ''
     # (Optionnal)
@@ -43,25 +33,17 @@ This action tries to solve that exact problem by enabling development teams to t
 ```
 # Scenarios
 
-## Execute local tests
+## Execute tests
 ```yaml
-- uses: liatrio/run-gatling@v1.1.0
+- uses: liatrio/run-gatling@v1.1.4
   with:
     pomPath: my_test_suite/path
 ```
 
 ## Execute a specific simulation
 ```yaml
-- uses: liatrio/run-gatling@v1.1.0
+- uses: liatrio/run-gatling@v1.1.4
   with:
     pomPath: my_test_suite/path
     simulationClass: simulationsPkg.MySimulationClass
-```
-
-## Execute tests from a repository
-```yaml
-- uses: liatrio/run-gatling@v1.1.0
-  with:
-    repoName: liatrio/gatling-maven-showcase
-    repoRef: main
 ```
