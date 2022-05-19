@@ -9,48 +9,67 @@ inputs:
     description: "Java distribution to use"
     default: "microsoft"
     required: true
-  testPath:
-    description: "Path to the Gatling Test Suite"
+  pomPath:
+    description: "Path to the Gatling Test Suite's pom.xml file"
     default: "test"
     required: true
-  repoName:
-    description: "Name of the repository to checkout ('org/repo')" 
-    required: false
-  repoRef:
-    description: "Tag, Branch, or Commit SHA for the Test Suite repository"
-    default: "main"
-    required: false
   simulationClass:
     description: "Full classpath of the simulation to run"
     required: false
 runs:
   using: "composite"
   steps:
-    - name: Checkout action code
-      uses: actions/checkout@v3
-      
-    - name: Checkout Test Suite if not local
-      if: ${{ !hashFiles(inputs.testPath) }}
-      uses: actions/checkout@v3
-      with:
-        repository: ${{ inputs.repoName }}
-        ref: ${{ inputs.repoRef }}
-        path: ${{ inputs.testPath }}
-
     - name: Execute Gatling Test Suite
       uses: actions/setup-java@v3
       with:
         distribution: ${{ inputs.javaDistribution }}
         java-version: ${{ inputs.javaVersion }}
 
-    - run: mvn -f $GITHUB_WORKSPACE/${{ inputs.testPath }} gatling:test ${{ inputs.simulationClass != '' && '-Dgatling.simulationClass=' || '' }}${{ inputs.simulationClass }}
+    - run: mvn -f $GITHUB_WORKSPACE/${{ inputs.pomPath }} gatling:test ${{ inputs.simulationClass != '' && '-Dgatling.simulationClass=' || '' }}${{ inputs.simulationClass }}
       shell: bash
   
     - name: Generate Job Summary 
       uses: actions/github-script@v6
       env:
-        TEST_PATH: ${{ inputs.testPath }}
+        TEST_PATH: ${{ inputs.pomPath }}
       with:
         script: |
-          const script = require(`${process.env.GITHUB_WORKSPACE}/dist/index.js`)
-          await script({github, context, core})
+          const fs = require('fs')
+          const pomPath = process.env.TEST_PATH
+          const lastRuns = fs.readFileSync(`${pomPath}/target/gatling/lastRun.txt`).toString().trim().split('\n');
+
+          for(const run of lastRuns) {
+              const results = JSON.parse(fs.readFileSync(`${pomPath}/target/gatling/${run}/js/stats.json`).toString());
+              let tableContent = [
+                  [
+                      {data: 'Request', header: true}, 
+                      {data: 'Success ✅', header: true}, 
+                      {data: 'Errors ❌', header: true}, 
+                      {data: 'Min', header: true},
+                      {data: 'Max', header: true},
+                      {data: 'Avg.', header: true},
+                      {data: 'Std. Dev.', header: true},
+                      {data: 'RPS', header: true},
+                  ]
+              ];
+              
+              for(const result in results.contents) {
+                  const requestMetrics = results.contents[result].stats;
+                  tableContent.push([
+                      requestMetrics.name,
+                      requestMetrics.numberOfRequests.ok.toString(),
+                      requestMetrics.numberOfRequests.ko.toString(),
+                      requestMetrics.minResponseTime.total.toString(),
+                      requestMetrics.maxResponseTime.total.toString(),
+                      requestMetrics.meanResponseTime.total.toString(),
+                      requestMetrics.standardDeviation.total.toString(),
+                      requestMetrics.meanNumberOfRequestsPerSecond.total.toString(),
+                  ]);
+              }
+
+              await core.summary
+                  .addHeading(`Results for ${run}`)
+                  .addTable(tableContent)
+                  .addQuote('All times are in millisecond (ms). RPS means "Requests per Second"')
+                  .write()
+          }

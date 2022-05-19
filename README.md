@@ -18,9 +18,9 @@ This action tries to solve that exact problem by enabling development teams to t
     # Default: 'microsoft'
     javaDistribution: ''
 
-    # Path to the Gatling Test Suite
+    # Path to the Gatling Test Suite's pom.xml file
     # Default: './test'
-    testPath: ''
+    pomPath: ''
 
     # Name of the repository to checkout ('org/repo')
     # Default: ''
@@ -47,14 +47,14 @@ This action tries to solve that exact problem by enabling development teams to t
 ```yaml
 - uses: liatrio/run-gatling@v1.1.0
   with:
-    testPath: my_test_suite/path
+    pomPath: my_test_suite/path
 ```
 
 ## Execute a specific simulation
 ```yaml
 - uses: liatrio/run-gatling@v1.1.0
   with:
-    testPath: my_test_suite/path
+    pomPath: my_test_suite/path
     simulationClass: simulationsPkg.MySimulationClass
 ```
 
