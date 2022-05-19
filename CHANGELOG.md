@@ -1,3 +1,10 @@
+### [1.1.1](https://github.com/liatrio/run-gatling/compare/v1.1.0...v1.1.1) (2022-05-19)
+
+
+### Bug Fixes
+
+* added env.GITHUB_WORKSPACE for summary ([#6](https://github.com/liatrio/run-gatling/issues/6)) ([ffd5f8a](https://github.com/liatrio/run-gatling/commit/ffd5f8a84717cba22536af7eb3b467f106eb9e9b))
+
 ## [1.1.0](https://github.com/liatrio/run-gatling/compare/v1.0.0...v1.1.0) (2022-05-19)
 
 
