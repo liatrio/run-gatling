@@ -1,11 +1,11 @@
 const fs   = require('fs');
 
 module.exports = async ({github, context, core}) => {
-    const testPath = process.env.TEST_PATH
-    const lastRuns = fs.readFileSync(`${testPath}/target/gatling/lastRun.txt`).toString().trim().split('\n');
+    const pomPath = process.env.TEST_PATH
+    const lastRuns = fs.readFileSync(`${pomPath}/target/gatling/lastRun.txt`).toString().trim().split('\n');
 
     for(const run of lastRuns) {
-        const results = JSON.parse(fs.readFileSync(`${testPath}/target/gatling/${run}/js/stats.json`).toString());
+        const results = JSON.parse(fs.readFileSync(`${pomPath}/target/gatling/${run}/js/stats.json`).toString());
         let tableContent = [
             [
                 {data: 'Request', header: true}, 
