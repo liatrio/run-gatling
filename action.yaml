@@ -26,6 +26,9 @@ inputs:
 runs:
   using: "composite"
   steps:
+    - name: Checkout action code
+      uses: actions/checkout@v3
+      
     - name: Checkout Test Suite if not local
       if: ${{ !hashFiles(inputs.testPath) }}
       uses: actions/checkout@v3
@@ -39,20 +42,20 @@ runs:
       with:
         distribution: ${{ inputs.javaDistribution }}
         java-version: ${{ inputs.javaVersion }}
-
-    - run: mvn -f ${{ inputs.testPath }} gatling:test ${{ inputs.simulationClass != '' && '-Dgatling.simulationClass=' || '' }}${{ inputs.simulationClass }}
-      shell: bash
-
+    
     - name: debug
       run: |
-        ls -la
+        ls -la $(pwd)
       shell: bash
+
+    # - run: mvn -f ${{ inputs.testPath }} gatling:test ${{ inputs.simulationClass != '' && '-Dgatling.simulationClass=' || '' }}${{ inputs.simulationClass }}
+    #   shell: bash
   
-    - name: Generate Job Summary 
-      uses: actions/github-script@v6
-      env:
-        TEST_PATH: ${{ inputs.testPath }}
-      with:
-        script: |
-          const script = require(`${process.env.GITHUB_WORKSPACE}/dist/index.js`)
-          await script({github, context, core})
+    # - name: Generate Job Summary 
+    #   uses: actions/github-script@v6
+    #   env:
+    #     TEST_PATH: ${{ inputs.testPath }}
+    #   with:
+    #     script: |
+    #       const script = require(`${process.env.GITHUB_WORKSPACE}/dist/index.js`)
+    #       await script({github, context, core})

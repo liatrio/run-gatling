@@ -51,7 +51,7 @@ jobs:
   testing-remote-action:
     runs-on: ubuntu-latest
     steps:
-      - uses: liatrio/run-gatling@v1.1.1
+      - uses: liatrio/run-gatling@testing-remote-action
         with:
           repoName: liatrio/gatling-maven-showcase
           repoRef: ${{ env.BRANCH_NAME }}
