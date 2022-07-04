@@ -12,6 +12,13 @@
 
 * changed testPath to pomPath ([#9](https://github.com/liatrio/run-gatling/issues/9)) ([6e7f165](https://github.com/liatrio/run-gatling/commit/6e7f1654c75ad988368671e8bba56c81ced3cbf3))
 
+## [1.2.0](https://github.com/liatrio/run-gatling/compare/v1.1.3...v1.2.0) (2022-07-04)
+
+
+### Features
+
+* changed testPath to pomPath ([#9](https://github.com/liatrio/run-gatling/issues/9)) ([6e7f165](https://github.com/liatrio/run-gatling/commit/6e7f1654c75ad988368671e8bba56c81ced3cbf3))
+
 ## [1.2.0](https://github.com/liatrio/run-gatling/compare/v1.1.3...v1.2.0) (2022-05-19)
 
 
